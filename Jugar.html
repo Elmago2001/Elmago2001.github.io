@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego</title>
+</head>
+<body>
+    <div class="prep" id="prep"> 5 </div>
+    <div class="cambio" id="cambio"> 00:20 </div>
+    <div class="total" id="total"> 03:00 </div>
+    <div class="letras" id="letras"></div>
+    
+    
+    <script>
+      
+      let i = 5;
+      let k = 180;
+      let j = 20;
+      let intervaloi;
+      let intervalokj;
+
+      const words = [
+            "Apple", "Book", "Cat", "Dog", "Elephant", "Fish", 
+            "Grape", "House", "Ice", "Juice", 
+            "Red", "Lemon", "Mouse", "Notebook", "Orange", 
+            "Pencil", "Queen", "Rose", "Sun", "Tree", 
+            "Umbrella", "Lion", "Water", "Flower", "Soccer", 
+            "Zebra", "Air", "Ball", "Car", "Door", 
+            "Egg", "Fan", "Gift", "Hat", "Igloo", 
+            "Jam", "Key", "Lamp", "Milk", "Nose", 
+            "Ocean", "Paint", "Quiet", "Ring", "Star", 
+            "Table", "Unicorn", "Vase", "Whale", "Soda", 
+            "Yellow", "Zoo", "Bat", "Cup", "Drum", 
+            "Eye", "Fork", "Glove", "Hand", "Backpack", 
+            "Jacket", "Cute", "Leaf", "Moon", "Neck", 
+            "Owl", "Pen", "Bear", "Rocket", "Shoe", 
+            "Tiger", "Purple", "Violin", "Window", "Ball", 
+            "Yogurt", "Zipper", "Math", "Bubble", "Angry", 
+            "Doll", "Bacon", "Flag", "Guitar", "Honey"];
+
+        function prepracion(){
+            intervaloi = setInterval(comenzar, 1000);
+        }
+       
+        function comenzar(){
+            if (i > 0){
+                document.getElementById("prep").innerText= i;
+                i--;
+            } else {
+                clearInterval(intervaloi);
+                document.getElementById("prep").innerText= "Empieza!!"
+
+                setTimeout(function(){
+                    document.getElementById("prep").innerText = "";},1000   //Este comando nos ayuda a 
+                );                                                          // quitar el mensaje empieza.
+
+                game();
+                inicio();   
+            }
+        }
+
+
+        function aleatorio(){
+            const select  = words[Math.floor(Math.random()*words.length)];
+            document.getElementById("letras").innerText=select;
+        }
+
+        function game(){
+            aleatorio();
+        }
+        
+        function inicio(){
+            intervalokj= setInterval(actua , 1000);
+        }
+
+
+        function actua() {
+            if (k > 0) {
+                k--;
+                let minutos = Math.floor(k / 60);
+                let segundos = k % 60;
+                document.getElementById("total").innerText =
+                    (minutos < 10 ? "0" + minutos : minutos) + ":" + 
+                    (segundos < 10 ? "0" + segundos : segundos);
+
+                if (j > 0){
+                j--;
+                }                  // Meti este bloque de datos aqui para que le afecte este condicional
+                else {             // y pueda cancelar los dos cronometros.
+                j=19;
+                game();
+                }
+
+            } else {
+                clearInterval(k);      //Aqui cierro los dos contadores.
+                clearInterval(j); 
+                document.getElementById("total").innerText = "¡Tiempo agotado!";
+            }
+            
+            let minutos2 = Math.floor(j / 60);
+            let segundos2 = j % 60;
+            document.getElementById("cambio").innerText =
+                (minutos2 < 10 ? "0" + minutos2 : minutos2) + ":" + 
+                (segundos2 < 10 ? "0" + segundos2 : segundos2);
+
+        }
+
+        window.onload = prepracion();
+    </script>
+
+
+</body>
+</html>
